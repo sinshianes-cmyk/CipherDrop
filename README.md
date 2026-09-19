@@ -25,7 +25,7 @@ CipherDrop is a free and open-source comic and novel reader for Android, built t
 
 ## About this fork
 
-This is an unofficial community fork of [CipherDrop](https://github.com/HuzaifaKhalid1311/CipherDrop), which is itself built on Kotatsu, Mihon and LNReader. It is not affiliated with the original project, and it has no website or Discord server of its own. Release APKs are published on this repository's Releases page.
+This is an unofficial community fork of [DropSauce](https://github.com/HuzaifaKhalid1311/CipherDrop), which is itself built on Kotatsu, Mihon and LNReader. It is not affiliated with the original project, and it has no website or Discord server of its own. Release APKs are published on this repository's Releases page.
 
 ### What is different in this fork
 
@@ -40,7 +40,6 @@ This is an unofficial community fork of [CipherDrop](https://github.com/HuzaifaK
 
 The full list of changes is in [CHANGELOG.md](CHANGELOG.md).
 
-> The fixes in this fork were made without a device to test on. If something looks wrong, please open an issue on this repository.
 
 ## THIS FORK NEW THEME SCREENSHOTS
 
