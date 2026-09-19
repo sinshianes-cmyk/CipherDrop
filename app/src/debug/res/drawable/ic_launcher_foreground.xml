@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- C -->
+    <path android:fillColor="#000000" android:pathData="M13,20 L47,20 L47,30 L13,30 Z"/>
+    <path android:fillColor="#000000" android:pathData="M13,20 L23,20 L23,88 L13,88 Z"/>
+    <path android:fillColor="#000000" android:pathData="M13,78 L47,78 L47,88 L13,88 Z"/>
+    <!-- shared spine (fuses C and D) -->
+    <path android:fillColor="#000000" android:pathData="M47,20 L58,20 L58,88 L47,88 Z"/>
+    <!-- D -->
+    <path android:fillColor="#000000" android:pathData="M58,20 L82,20 L82,30 L58,30 Z"/>
+    <path android:fillColor="#000000" android:pathData="M58,78 L82,78 L82,88 L58,88 Z"/>
+    <path android:fillColor="#000000" android:pathData="M82,30 L93,42 L93,66 L82,78 L89,78 L100,66 L100,42 L89,30 Z"/>
+</vector>

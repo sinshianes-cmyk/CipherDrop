@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  CipherDrop launcher icon - monochrome layer (Android 13+ themed icons).
+  Flat silhouette of the CD monogram; the system tints it at render time.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:aapt="http://schemas.android.com/aapt"
+	android:width="108dp"
+	android:height="108dp"
+	android:viewportWidth="108"
+	android:viewportHeight="108">
+	<group
+		android:translateX="14.320"
+		android:translateY="16.240"
+		android:scaleX="0.064"
+		android:scaleY="0.064">
+		<path
+			android:fillColor="#FFFFFFFF"
+			android:pathData="M442,304 L655,304 L566,401 L465,401 L326,540 L326,632 L432,736 L566,736 L657,829 L398,829 L242,672 L242,516 Z" />
+		<path
+			android:fillColor="#FFFFFFFF"
+			android:pathData="M689,377 L854,377 L998,522 L998,714 L837,875 L744,875 L568,696 L568,607 L663,513 L663,727 L714,778 L805,778 L908,676 L908,557 L818,467 L689,467 Z" />
+		<path
+			android:fillColor="#FFFFFFFF"
+			android:pathData="M659,366 L669,366 L669,462 L577,554 L568,554 L568,456 Z" />
+	</group>
+</vector>

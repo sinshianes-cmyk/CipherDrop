@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:insetLeft="16dp"
+	android:insetTop="16dp"
+	android:insetRight="16dp"
+	android:insetBottom="16dp">
+	<drawable
+		class="org.koitharu.kotatsu.core.ui.drawable.CutCornerDrawable"
+		app:cutFillColor="?attr/colorSurface"
+		app:cutSize="@dimen/window_cut_size" />
+</inset>

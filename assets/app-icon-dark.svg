@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" role="img" aria-label="CipherDrop dark mode app icon">
+  <!-- Background -->
+  <rect width="108" height="108" fill="#0a0e1a"/>
+  <!-- Grid -->
+  <g stroke="#1a2a4a" stroke-width="0.4" fill="none">
+    <line x1="0" y1="18" x2="108" y2="18"/><line x1="0" y1="36" x2="108" y2="36"/>
+    <line x1="0" y1="54" x2="108" y2="54"/><line x1="0" y1="72" x2="108" y2="72"/>
+    <line x1="0" y1="90" x2="108" y2="90"/>
+    <line x1="18" y1="0" x2="18" y2="108"/><line x1="36" y1="0" x2="36" y2="108"/>
+    <line x1="54" y1="0" x2="54" y2="108"/><line x1="72" y1="0" x2="72" y2="108"/>
+    <line x1="90" y1="0" x2="90" y2="108"/>
+  </g>
+  <!-- Glitch shadow (purple) -->
+  <g fill="#bf40ff">
+    <rect x="26.5" y="25.5" width="25" height="6"/>
+    <rect x="26.5" y="25.5" width="6" height="58"/>
+    <rect x="26.5" y="77.5" width="25" height="6"/>
+    <rect x="58.5" y="25.5" width="6" height="58"/>
+    <rect x="58.5" y="25.5" width="20" height="6"/>
+    <rect x="58.5" y="77.5" width="20" height="6"/>
+    <path d="M76.5,31.5 L84.5,40.5 L84.5,68.5 L76.5,77.5 L82.5,77.5 L90.5,68.5 L90.5,40.5 L82.5,31.5 Z"/>
+  </g>
+  <!-- C primary (cyan) -->
+  <g fill="#00e5ff">
+    <rect x="25" y="24" width="25" height="6"/>
+    <rect x="25" y="24" width="6" height="60"/>
+    <rect x="25" y="78" width="25" height="6"/>
+  </g>
+  <!-- D primary (cyan) -->
+  <g fill="#00e5ff">
+    <rect x="57" y="24" width="6" height="60"/>
+    <rect x="57" y="24" width="20" height="6"/>
+    <rect x="57" y="78" width="20" height="6"/>
+    <path d="M75,30 L83,39 L83,69 L75,78 L81,78 L89,69 L89,39 L81,30 Z"/>
+  </g>
+  <!-- D hollow -->
+  <path d="M63,30 L75,30 L81,37 L81,71 L75,78 L63,78 Z" fill="#0a0e1a"/>
+  <!-- Corner dots -->
+  <rect x="19" y="19" width="3" height="3" fill="#00e5ff" opacity="0.8"/>
+  <rect x="86" y="19" width="3" height="3" fill="#00e5ff" opacity="0.8"/>
+  <rect x="19" y="86" width="3" height="3" fill="#00e5ff" opacity="0.8"/>
+  <rect x="86" y="86" width="3" height="3" fill="#00e5ff" opacity="0.8"/>
+</svg>

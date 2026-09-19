@@ -1,0 +1,309 @@
+package org.koitharu.kotatsu.history.ui
+
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
+import kotlinx.coroutines.plus
+import org.koitharu.kotatsu.R
+import org.koitharu.kotatsu.core.model.MangaHistory
+import org.koitharu.kotatsu.core.model.isLocal
+import org.koitharu.kotatsu.core.nav.MangaIntent
+import org.koitharu.kotatsu.core.parser.MangaDataRepository
+import org.koitharu.kotatsu.core.prefs.AppSettings
+import org.koitharu.kotatsu.core.prefs.ListMode
+import org.koitharu.kotatsu.core.prefs.observeAsFlow
+import org.koitharu.kotatsu.core.prefs.observeAsStateFlow
+import org.koitharu.kotatsu.core.ui.util.ReversibleAction
+import org.koitharu.kotatsu.core.util.ext.calculateTimeAgo
+import org.koitharu.kotatsu.core.util.ext.call
+import org.koitharu.kotatsu.core.util.ext.flattenLatest
+import org.koitharu.kotatsu.details.domain.DetailsLoadUseCase
+import org.koitharu.kotatsu.history.data.HistoryRepository
+import org.koitharu.kotatsu.history.domain.HistoryListQuickFilter
+import org.koitharu.kotatsu.history.domain.MarkAsReadUseCase
+import org.koitharu.kotatsu.history.domain.model.MangaWithHistory
+import org.koitharu.kotatsu.list.domain.ListFilterOption
+import org.koitharu.kotatsu.list.domain.ListSortOrder
+import org.koitharu.kotatsu.list.domain.MangaListMapper
+import org.koitharu.kotatsu.list.domain.QuickFilterListener
+import org.koitharu.kotatsu.list.domain.ReadingProgress
+import org.koitharu.kotatsu.list.ui.MangaListViewModel
+import org.koitharu.kotatsu.list.ui.model.EmptyState
+import org.koitharu.kotatsu.list.ui.model.InfoModel
+import org.koitharu.kotatsu.list.ui.model.ListHeader
+import org.koitharu.kotatsu.list.ui.model.ListModel
+import org.koitharu.kotatsu.list.ui.model.LoadingState
+import org.koitharu.kotatsu.list.ui.model.TIP_UI_SCALING
+import org.koitharu.kotatsu.list.ui.model.uiScalingTip
+import org.koitharu.kotatsu.list.ui.model.toErrorState
+import org.koitharu.kotatsu.parsers.model.Manga
+import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
+import java.time.Instant
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicBoolean
+import javax.inject.Inject
+import org.koitharu.kotatsu.local.data.LocalStorageChanges
+import org.koitharu.kotatsu.local.domain.model.LocalManga
+import kotlinx.coroutines.flow.SharedFlow
+
+private const val PAGE_SIZE = 16
+private const val CHAPTER_FETCH_PARALLELISM = 3
+
+@HiltViewModel
+class HistoryListViewModel @Inject constructor(
+	private val repository: HistoryRepository,
+	private val settings: AppSettings,
+	private val mangaListMapper: MangaListMapper,
+	private val markAsReadUseCase: MarkAsReadUseCase,
+	private val quickFilter: HistoryListQuickFilter,
+	private val detailsLoadUseCase: DetailsLoadUseCase,
+	mangaDataRepository: MangaDataRepository,
+	@LocalStorageChanges localStorageChanges: SharedFlow<LocalManga?>,
+) : MangaListViewModel(settings, mangaDataRepository, localStorageChanges), QuickFilterListener by quickFilter {
+
+	private val sortOrder: StateFlow<ListSortOrder> = settings.observeAsStateFlow(
+		scope = viewModelScope + Dispatchers.IO,
+		key = AppSettings.KEY_HISTORY_ORDER,
+		valueProducer = { historySortOrder },
+	)
+
+	override val listMode = settings.observeAsStateFlow(
+		scope = viewModelScope + Dispatchers.Default,
+		key = AppSettings.KEY_LIST_MODE_HISTORY,
+		valueProducer = { historyListMode },
+	)
+
+	private val isGroupingEnabled = settings.observeAsFlow(
+		key = AppSettings.KEY_HISTORY_GROUPING,
+		valueProducer = { isHistoryGroupingEnabled },
+	).combine(sortOrder) { g, s ->
+		g && s.isGroupingSupported()
+	}
+
+	private val limit = MutableStateFlow(PAGE_SIZE)
+
+	/**
+	 * After a fresh install / restored backup the chapter lists are not cached, so the entries have no
+	 * chapter info until the title is opened once. The missing lists are fetched here in the
+	 * background; every completed fetch bumps this counter so the list is rebuilt with the chapters.
+	 */
+	private val chapterInfoRefresh = MutableStateFlow(0)
+	private val chapterInfoRequested = ConcurrentHashMap.newKeySet<Long>()
+	private val chapterInfoLimiter = Semaphore(CHAPTER_FETCH_PARALLELISM)
+	private val isPaginationReady = AtomicBoolean(false)
+
+	val isStatsEnabled = settings.observeAsStateFlow(
+		scope = viewModelScope + Dispatchers.Default,
+		key = AppSettings.KEY_STATS_ENABLED,
+		valueProducer = { isStatsEnabled },
+	)
+
+	override val content = combine(
+		observeHistory(),
+		isGroupingEnabled,
+		observeListModeWithTriggers(),
+		// Grouped to stay inside combine's five-flow overload.
+		combine(
+			settings.observeAsFlow(AppSettings.KEY_INCOGNITO_MODE) { isIncognitoModeEnabled },
+			settings.observeAsFlow(AppSettings.KEY_TIPS_CLOSED) { isTipEnabled(TIP_UI_SCALING) },
+			chapterInfoRefresh,
+		) { incognito, isScalingTipVisible, _ -> incognito to isScalingTipVisible },
+	) { list, grouped, mode, (incognito, isScalingTipVisible) ->
+		// Filters are read here rather than combined in: observeHistory() already re-queries on every
+		// filter change, and a second input would render the chips one frame ahead of their results.
+		mapList(list, grouped, mode, quickFilter.appliedOptions.value, incognito, isScalingTipVisible)
+	}.distinctUntilChanged().onEach {
+		isPaginationReady.set(true)
+	}.catch { e ->
+		emit(listOf(e.toErrorState(canRetry = false)))
+	}.stateIn(viewModelScope + Dispatchers.Default, SharingStarted.Eagerly, listOf(LoadingState))
+
+	override fun onRefresh() = Unit
+
+	override fun onRetry() = Unit
+
+	/** Shared with Favourites: dismissing it on either screen dismisses it on both. */
+	fun dismissScalingTip() {
+		settings.closeTip(TIP_UI_SCALING)
+	}
+
+	fun clearHistory(minDate: Instant?) {
+		launchJob(Dispatchers.Default) {
+			val stringRes = if (minDate == null) {
+				repository.clear()
+				R.string.history_cleared
+			} else {
+				repository.deleteAfter(minDate.toEpochMilli())
+				R.string.removed_from_history
+			}
+			onActionDone.call(ReversibleAction(stringRes, null))
+		}
+	}
+
+	fun removeNotFavorite() {
+		launchJob(Dispatchers.Default) {
+			repository.deleteNotFavorite()
+			onActionDone.call(ReversibleAction(R.string.removed_from_history, null))
+		}
+	}
+
+	fun removeFromHistory(ids: Set<Long>) {
+		if (ids.isEmpty()) {
+			return
+		}
+		launchJob(Dispatchers.Default) {
+			val handle = repository.delete(ids)
+			onActionDone.call(ReversibleAction(R.string.removed_from_history, handle))
+		}
+	}
+
+	fun markAsRead(items: Set<Manga>) {
+		launchLoadingJob(Dispatchers.Default) {
+			markAsReadUseCase(items)
+		}
+	}
+
+	fun requestMoreItems() {
+		if (isPaginationReady.compareAndSet(true, false)) {
+			limit.value += PAGE_SIZE
+		}
+	}
+
+	private fun observeHistory() = combine(
+		sortOrder,
+		quickFilter.appliedOptions.combineWithSettings(),
+		limit,
+	) { order, filters, limit ->
+		isPaginationReady.set(false)
+		repository.observeAllWithHistory(order, filters, limit)
+	}.flattenLatest()
+
+	private suspend fun mapList(
+		list: List<MangaWithHistory>,
+		grouped: Boolean,
+		mode: ListMode,
+		filters: Set<ListFilterOption>,
+		isIncognito: Boolean,
+		isScalingTipVisible: Boolean,
+	): List<ListModel> {
+		if (list.isEmpty()) {
+			return if (filters.isEmpty()) {
+				listOf(getEmptyState(hasFilters = false))
+			} else {
+				listOfNotNull(quickFilter.filterItem(filters), getEmptyState(hasFilters = true))
+			}
+		}
+		val result = ArrayList<ListModel>((if (grouped) (list.size * 1.4).toInt() else list.size) + 3)
+		if (isScalingTipVisible) {
+			result += uiScalingTip
+		}
+		quickFilter.filterItem(filters)?.let(result::add)
+		if (isIncognito) {
+			result += InfoModel(
+				key = AppSettings.KEY_INCOGNITO_MODE,
+				title = R.string.incognito_mode,
+				text = R.string.incognito_mode_hint,
+				icon = R.drawable.ic_incognito,
+			)
+		}
+		val order = sortOrder.value
+		var prevHeader: ListHeader? = null
+		var isEmpty = true
+		for ((manga, history) in list) {
+			isEmpty = false
+			if (grouped) {
+				val header = history.header(order)
+				if (header != prevHeader) {
+					if (header != null) {
+						result += header
+					}
+					prevHeader = header
+				}
+			}
+			val chapter = repository.getChapter(history.chapterId)
+			if (chapter == null) {
+				requestChapterInfo(manga, history.chapterId)
+			}
+			result += mangaListMapper.toHistoryListModel(manga, history, chapter, mode)
+		}
+		if (filters.isNotEmpty() && isEmpty) {
+			result += getEmptyState(hasFilters = true)
+		}
+		return result
+	}
+
+	/**
+	 * Fetches (and caches) the chapter list of [manga] the same way opening its details page does,
+	 * then refreshes the list so the last-read chapter shows up. Runs at most once per title unless
+	 * the fetch failed (offline, source down), in which case it is tried again on the next rebuild.
+	 */
+	private fun requestChapterInfo(manga: Manga, chapterId: Long) {
+		if (manga.isLocal || !chapterInfoRequested.add(manga.id)) {
+			return
+		}
+		viewModelScope.launch(Dispatchers.Default) {
+			chapterInfoLimiter.withPermit {
+				runCatchingCancellable {
+					detailsLoadUseCase(MangaIntent.of(manga), force = false).first { it.isLoaded }
+				}
+			}
+			when {
+				repository.getChapter(chapterId) != null -> chapterInfoRefresh.update { it + 1 }
+				// Nothing got cached (offline / source error): allow another attempt later.
+				!repository.hasCachedChapters(manga.id) -> chapterInfoRequested.remove(manga.id)
+				// The list was cached but does not contain that chapter: keep it quiet, don't refetch.
+				else -> Unit
+			}
+		}
+	}
+
+	private fun MangaHistory.header(order: ListSortOrder): ListHeader? = when (order.type) {
+		ListSortOrder.Type.LAST_READ -> calculateTimeAgo(updatedAt)?.let {
+			ListHeader(it)
+		} ?: ListHeader(R.string.unknown)
+
+		ListSortOrder.Type.DATE_ADDED -> calculateTimeAgo(createdAt)?.let {
+			ListHeader(it)
+		} ?: ListHeader(R.string.unknown)
+
+		ListSortOrder.Type.PROGRESS -> ListHeader(
+			when {
+				ReadingProgress.isCompleted(percent) -> R.string.status_completed
+				percent in 0f..0.01f -> R.string.status_planned
+				percent in 0f..1f -> R.string.status_reading
+				else -> R.string.unknown
+			},
+		)
+
+		else -> null
+	}
+
+	private fun getEmptyState(hasFilters: Boolean) = if (hasFilters) {
+		EmptyState(
+			icon = R.drawable.ic_empty_history,
+			textPrimary = R.string.nothing_found,
+			textSecondary = R.string.text_empty_holder_secondary_filtered,
+			actionStringRes = R.string.reset_filter,
+		)
+	} else {
+		EmptyState(
+			icon = R.drawable.ic_empty_history,
+			textPrimary = R.string.text_history_holder_primary,
+			textSecondary = R.string.text_history_holder_secondary,
+			actionStringRes = 0,
+		)
+	}
+}

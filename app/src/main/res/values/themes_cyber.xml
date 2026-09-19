@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+	<!--
+	  Cyber Terminal theme (ported from SQL Reader).
+	  ThemeOverlay.Kotatsu.Cyber is the shared base; each ThemeOverlay.Kotatsu.Cyber.<Accent> below only
+	  swaps the accent palette. The overlay is dark-only: the app forces night mode.
+	-->
+	<style name="ThemeOverlay.Kotatsu.Cyber" parent="ThemeOverlay.Kotatsu">
+		<!-- Monospace terminal typography (sizes/weights live in the TextAppearance.Kotatsu.* styles) -->
+		<item name="android:fontFamily">monospace</item>
+		<item name="fontFamily">monospace</item>
+
+		<!-- HUD shapes: cut corners instead of rounded ones -->
+		<item name="shapeAppearanceCornerExtraSmall">@style/ShapeAppearance.Kotatsu.Cyber.CornerExtraSmall</item>
+		<item name="shapeAppearanceCornerSmall">@style/ShapeAppearance.Kotatsu.Cyber.CornerSmall</item>
+		<item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.Kotatsu.Cyber.CornerMedium</item>
+		<item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.Kotatsu.Cyber.CornerLarge</item>
+		<item name="shapeAppearanceCornerExtraLarge">@style/ShapeAppearance.Kotatsu.Cyber.CornerExtraLarge</item>
+
+		<!-- Outlined "terminal panel" cards -->
+		<item name="materialCardViewStyle">@style/Widget.Kotatsu.Cyber.Card</item>
+
+		<!-- Always light system-bar icons: the theme is dark -->
+		<item name="android:windowLightStatusBar" tools:targetApi="M">false</item>
+	</style>
+
+	<style name="ShapeAppearance.Kotatsu.Cyber.CornerExtraSmall" parent="">
+		<item name="cornerFamily">cut</item>
+		<item name="cornerSize">2dp</item>
+	</style>
+
+	<style name="ShapeAppearance.Kotatsu.Cyber.CornerSmall" parent="">
+		<item name="cornerFamily">cut</item>
+		<item name="cornerSize">4dp</item>
+	</style>
+
+	<!-- Same silhouette as CyberCard in SQL Reader: top-start and bottom-end corners are cut. -->
+	<style name="ShapeAppearance.Kotatsu.Cyber.CornerMedium" parent="">
+		<item name="cornerFamily">cut</item>
+		<item name="cornerSize">0dp</item>
+		<item name="cornerSizeTopLeft">8dp</item>
+		<item name="cornerSizeBottomRight">8dp</item>
+	</style>
+
+	<style name="ShapeAppearance.Kotatsu.Cyber.CornerLarge" parent="">
+		<item name="cornerFamily">cut</item>
+		<item name="cornerSize">0dp</item>
+		<item name="cornerSizeTopLeft">12dp</item>
+		<item name="cornerSizeBottomRight">12dp</item>
+	</style>
+
+	<style name="ShapeAppearance.Kotatsu.Cyber.CornerExtraLarge" parent="">
+		<item name="cornerFamily">cut</item>
+		<item name="cornerSize">0dp</item>
+		<item name="cornerSizeTopLeft">16dp</item>
+		<item name="cornerSizeBottomRight">16dp</item>
+	</style>
+
+	<!-- Windows (dialogs, sheets): all four corners cut, like the "Last position" pill. -->
+	<style name="ShapeAppearance.Kotatsu.Cyber.Window" parent="">
+		<item name="cornerFamily">cut</item>
+		<item name="cornerSize">@dimen/window_cut_size</item>
+	</style>
+
+	<style name="Widget.Kotatsu.Cyber.Card" parent="Widget.Material3.CardView.Outlined">
+		<item name="strokeColor">?attr/colorOutline</item>
+		<item name="strokeWidth">1dp</item>
+		<item name="cardElevation">0dp</item>
+	</style>
+
+
+	<!-- Phosphor Green -->
+	<style name="ThemeOverlay.Kotatsu.Cyber.Green" parent="ThemeOverlay.Kotatsu.Cyber">
+		<item name="colorPrimary">@color/cyber_green_primary</item>
+		<item name="colorOnPrimary">@color/cyber_green_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/cyber_green_primaryContainer</item>
+		<item name="colorOnPrimaryContainer">@color/cyber_green_onPrimaryContainer</item>
+		<item name="colorSecondary">@color/cyber_green_secondary</item>
+		<item name="colorOnSecondary">@color/cyber_green_onSecondary</item>
+		<item name="colorSecondaryContainer">@color/cyber_green_secondaryContainer</item>
+		<item name="colorOnSecondaryContainer">@color/cyber_green_onSecondaryContainer</item>
+		<item name="colorTertiary">@color/cyber_green_tertiary</item>
+		<item name="colorOnTertiary">@color/cyber_green_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/cyber_green_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/cyber_green_onTertiaryContainer</item>
+		<item name="colorError">@color/cyber_green_error</item>
+		<item name="colorOnError">@color/cyber_green_onError</item>
+		<item name="colorErrorContainer">@color/cyber_green_errorContainer</item>
+		<item name="colorOnErrorContainer">@color/cyber_green_onErrorContainer</item>
+		<item name="android:colorBackground">@color/cyber_green_background</item>
+		<item name="colorOnBackground">@color/cyber_green_onBackground</item>
+		<item name="colorSurface">@color/cyber_green_surface</item>
+		<item name="colorOnSurface">@color/cyber_green_onSurface</item>
+		<item name="colorSurfaceVariant">@color/cyber_green_surfaceVariant</item>
+		<item name="colorOnSurfaceVariant">@color/cyber_green_onSurfaceVariant</item>
+		<item name="colorOutline">@color/cyber_green_outline</item>
+		<item name="colorOutlineVariant">@color/cyber_green_outlineVariant</item>
+		<item name="colorSurfaceInverse">@color/cyber_green_inverseSurface</item>
+		<item name="colorOnSurfaceInverse">@color/cyber_green_inverseOnSurface</item>
+		<item name="colorPrimaryInverse">@color/cyber_green_inversePrimary</item>
+		<item name="colorPrimaryFixed">@color/cyber_green_primaryFixed</item>
+		<item name="colorOnPrimaryFixed">@color/cyber_green_onPrimaryFixed</item>
+		<item name="colorPrimaryFixedDim">@color/cyber_green_primaryFixedDim</item>
+		<item name="colorOnPrimaryFixedVariant">@color/cyber_green_onPrimaryFixedVariant</item>
+		<item name="colorSecondaryFixed">@color/cyber_green_secondaryFixed</item>
+		<item name="colorOnSecondaryFixed">@color/cyber_green_onSecondaryFixed</item>
+		<item name="colorSecondaryFixedDim">@color/cyber_green_secondaryFixedDim</item>
+		<item name="colorOnSecondaryFixedVariant">@color/cyber_green_onSecondaryFixedVariant</item>
+		<item name="colorTertiaryFixed">@color/cyber_green_tertiaryFixed</item>
+		<item name="colorOnTertiaryFixed">@color/cyber_green_onTertiaryFixed</item>
+		<item name="colorTertiaryFixedDim">@color/cyber_green_tertiaryFixedDim</item>
+		<item name="colorOnTertiaryFixedVariant">@color/cyber_green_onTertiaryFixedVariant</item>
+		<item name="colorSurfaceDim">@color/cyber_green_surfaceDim</item>
+		<item name="colorSurfaceBright">@color/cyber_green_surfaceBright</item>
+		<item name="colorSurfaceContainerLowest">@color/cyber_green_surfaceContainerLowest</item>
+		<item name="colorSurfaceContainerLow">@color/cyber_green_surfaceContainerLow</item>
+		<item name="colorSurfaceContainer">@color/cyber_green_surfaceContainer</item>
+		<item name="colorSurfaceContainerHigh">@color/cyber_green_surfaceContainerHigh</item>
+		<item name="colorSurfaceContainerHighest">@color/cyber_green_surfaceContainerHighest</item>
+		<item name="android:windowBackground">@color/cyber_green_background</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+	</style>
+
+	<!-- Neon Blue -->
+	<style name="ThemeOverlay.Kotatsu.Cyber.Blue" parent="ThemeOverlay.Kotatsu.Cyber">
+		<item name="colorPrimary">@color/cyber_blue_primary</item>
+		<item name="colorOnPrimary">@color/cyber_blue_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/cyber_blue_primaryContainer</item>
+		<item name="colorOnPrimaryContainer">@color/cyber_blue_onPrimaryContainer</item>
+		<item name="colorSecondary">@color/cyber_blue_secondary</item>
+		<item name="colorOnSecondary">@color/cyber_blue_onSecondary</item>
+		<item name="colorSecondaryContainer">@color/cyber_blue_secondaryContainer</item>
+		<item name="colorOnSecondaryContainer">@color/cyber_blue_onSecondaryContainer</item>
+		<item name="colorTertiary">@color/cyber_blue_tertiary</item>
+		<item name="colorOnTertiary">@color/cyber_blue_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/cyber_blue_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/cyber_blue_onTertiaryContainer</item>
+		<item name="colorError">@color/cyber_blue_error</item>
+		<item name="colorOnError">@color/cyber_blue_onError</item>
+		<item name="colorErrorContainer">@color/cyber_blue_errorContainer</item>
+		<item name="colorOnErrorContainer">@color/cyber_blue_onErrorContainer</item>
+		<item name="android:colorBackground">@color/cyber_blue_background</item>
+		<item name="colorOnBackground">@color/cyber_blue_onBackground</item>
+		<item name="colorSurface">@color/cyber_blue_surface</item>
+		<item name="colorOnSurface">@color/cyber_blue_onSurface</item>
+		<item name="colorSurfaceVariant">@color/cyber_blue_surfaceVariant</item>
+		<item name="colorOnSurfaceVariant">@color/cyber_blue_onSurfaceVariant</item>
+		<item name="colorOutline">@color/cyber_blue_outline</item>
+		<item name="colorOutlineVariant">@color/cyber_blue_outlineVariant</item>
+		<item name="colorSurfaceInverse">@color/cyber_blue_inverseSurface</item>
+		<item name="colorOnSurfaceInverse">@color/cyber_blue_inverseOnSurface</item>
+		<item name="colorPrimaryInverse">@color/cyber_blue_inversePrimary</item>
+		<item name="colorPrimaryFixed">@color/cyber_blue_primaryFixed</item>
+		<item name="colorOnPrimaryFixed">@color/cyber_blue_onPrimaryFixed</item>
+		<item name="colorPrimaryFixedDim">@color/cyber_blue_primaryFixedDim</item>
+		<item name="colorOnPrimaryFixedVariant">@color/cyber_blue_onPrimaryFixedVariant</item>
+		<item name="colorSecondaryFixed">@color/cyber_blue_secondaryFixed</item>
+		<item name="colorOnSecondaryFixed">@color/cyber_blue_onSecondaryFixed</item>
+		<item name="colorSecondaryFixedDim">@color/cyber_blue_secondaryFixedDim</item>
+		<item name="colorOnSecondaryFixedVariant">@color/cyber_blue_onSecondaryFixedVariant</item>
+		<item name="colorTertiaryFixed">@color/cyber_blue_tertiaryFixed</item>
+		<item name="colorOnTertiaryFixed">@color/cyber_blue_onTertiaryFixed</item>
+		<item name="colorTertiaryFixedDim">@color/cyber_blue_tertiaryFixedDim</item>
+		<item name="colorOnTertiaryFixedVariant">@color/cyber_blue_onTertiaryFixedVariant</item>
+		<item name="colorSurfaceDim">@color/cyber_blue_surfaceDim</item>
+		<item name="colorSurfaceBright">@color/cyber_blue_surfaceBright</item>
+		<item name="colorSurfaceContainerLowest">@color/cyber_blue_surfaceContainerLowest</item>
+		<item name="colorSurfaceContainerLow">@color/cyber_blue_surfaceContainerLow</item>
+		<item name="colorSurfaceContainer">@color/cyber_blue_surfaceContainer</item>
+		<item name="colorSurfaceContainerHigh">@color/cyber_blue_surfaceContainerHigh</item>
+		<item name="colorSurfaceContainerHighest">@color/cyber_blue_surfaceContainerHighest</item>
+		<item name="android:windowBackground">@color/cyber_blue_background</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+	</style>
+
+	<!-- Ice Cyan -->
+	<style name="ThemeOverlay.Kotatsu.Cyber.Cyan" parent="ThemeOverlay.Kotatsu.Cyber">
+		<item name="colorPrimary">@color/cyber_cyan_primary</item>
+		<item name="colorOnPrimary">@color/cyber_cyan_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/cyber_cyan_primaryContainer</item>
+		<item name="colorOnPrimaryContainer">@color/cyber_cyan_onPrimaryContainer</item>
+		<item name="colorSecondary">@color/cyber_cyan_secondary</item>
+		<item name="colorOnSecondary">@color/cyber_cyan_onSecondary</item>
+		<item name="colorSecondaryContainer">@color/cyber_cyan_secondaryContainer</item>
+		<item name="colorOnSecondaryContainer">@color/cyber_cyan_onSecondaryContainer</item>
+		<item name="colorTertiary">@color/cyber_cyan_tertiary</item>
+		<item name="colorOnTertiary">@color/cyber_cyan_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/cyber_cyan_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/cyber_cyan_onTertiaryContainer</item>
+		<item name="colorError">@color/cyber_cyan_error</item>
+		<item name="colorOnError">@color/cyber_cyan_onError</item>
+		<item name="colorErrorContainer">@color/cyber_cyan_errorContainer</item>
+		<item name="colorOnErrorContainer">@color/cyber_cyan_onErrorContainer</item>
+		<item name="android:colorBackground">@color/cyber_cyan_background</item>
+		<item name="colorOnBackground">@color/cyber_cyan_onBackground</item>
+		<item name="colorSurface">@color/cyber_cyan_surface</item>
+		<item name="colorOnSurface">@color/cyber_cyan_onSurface</item>
+		<item name="colorSurfaceVariant">@color/cyber_cyan_surfaceVariant</item>
+		<item name="colorOnSurfaceVariant">@color/cyber_cyan_onSurfaceVariant</item>
+		<item name="colorOutline">@color/cyber_cyan_outline</item>
+		<item name="colorOutlineVariant">@color/cyber_cyan_outlineVariant</item>
+		<item name="colorSurfaceInverse">@color/cyber_cyan_inverseSurface</item>
+		<item name="colorOnSurfaceInverse">@color/cyber_cyan_inverseOnSurface</item>
+		<item name="colorPrimaryInverse">@color/cyber_cyan_inversePrimary</item>
+		<item name="colorPrimaryFixed">@color/cyber_cyan_primaryFixed</item>
+		<item name="colorOnPrimaryFixed">@color/cyber_cyan_onPrimaryFixed</item>
+		<item name="colorPrimaryFixedDim">@color/cyber_cyan_primaryFixedDim</item>
+		<item name="colorOnPrimaryFixedVariant">@color/cyber_cyan_onPrimaryFixedVariant</item>
+		<item name="colorSecondaryFixed">@color/cyber_cyan_secondaryFixed</item>
+		<item name="colorOnSecondaryFixed">@color/cyber_cyan_onSecondaryFixed</item>
+		<item name="colorSecondaryFixedDim">@color/cyber_cyan_secondaryFixedDim</item>
+		<item name="colorOnSecondaryFixedVariant">@color/cyber_cyan_onSecondaryFixedVariant</item>
+		<item name="colorTertiaryFixed">@color/cyber_cyan_tertiaryFixed</item>
+		<item name="colorOnTertiaryFixed">@color/cyber_cyan_onTertiaryFixed</item>
+		<item name="colorTertiaryFixedDim">@color/cyber_cyan_tertiaryFixedDim</item>
+		<item name="colorOnTertiaryFixedVariant">@color/cyber_cyan_onTertiaryFixedVariant</item>
+		<item name="colorSurfaceDim">@color/cyber_cyan_surfaceDim</item>
+		<item name="colorSurfaceBright">@color/cyber_cyan_surfaceBright</item>
+		<item name="colorSurfaceContainerLowest">@color/cyber_cyan_surfaceContainerLowest</item>
+		<item name="colorSurfaceContainerLow">@color/cyber_cyan_surfaceContainerLow</item>
+		<item name="colorSurfaceContainer">@color/cyber_cyan_surfaceContainer</item>
+		<item name="colorSurfaceContainerHigh">@color/cyber_cyan_surfaceContainerHigh</item>
+		<item name="colorSurfaceContainerHighest">@color/cyber_cyan_surfaceContainerHighest</item>
+		<item name="android:windowBackground">@color/cyber_cyan_background</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+	</style>
+
+	<!-- Ghost White -->
+	<style name="ThemeOverlay.Kotatsu.Cyber.White" parent="ThemeOverlay.Kotatsu.Cyber">
+		<item name="colorPrimary">@color/cyber_white_primary</item>
+		<item name="colorOnPrimary">@color/cyber_white_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/cyber_white_primaryContainer</item>
+		<item name="colorOnPrimaryContainer">@color/cyber_white_onPrimaryContainer</item>
+		<item name="colorSecondary">@color/cyber_white_secondary</item>
+		<item name="colorOnSecondary">@color/cyber_white_onSecondary</item>
+		<item name="colorSecondaryContainer">@color/cyber_white_secondaryContainer</item>
+		<item name="colorOnSecondaryContainer">@color/cyber_white_onSecondaryContainer</item>
+		<item name="colorTertiary">@color/cyber_white_tertiary</item>
+		<item name="colorOnTertiary">@color/cyber_white_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/cyber_white_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/cyber_white_onTertiaryContainer</item>
+		<item name="colorError">@color/cyber_white_error</item>
+		<item name="colorOnError">@color/cyber_white_onError</item>
+		<item name="colorErrorContainer">@color/cyber_white_errorContainer</item>
+		<item name="colorOnErrorContainer">@color/cyber_white_onErrorContainer</item>
+		<item name="android:colorBackground">@color/cyber_white_background</item>
+		<item name="colorOnBackground">@color/cyber_white_onBackground</item>
+		<item name="colorSurface">@color/cyber_white_surface</item>
+		<item name="colorOnSurface">@color/cyber_white_onSurface</item>
+		<item name="colorSurfaceVariant">@color/cyber_white_surfaceVariant</item>
+		<item name="colorOnSurfaceVariant">@color/cyber_white_onSurfaceVariant</item>
+		<item name="colorOutline">@color/cyber_white_outline</item>
+		<item name="colorOutlineVariant">@color/cyber_white_outlineVariant</item>
+		<item name="colorSurfaceInverse">@color/cyber_white_inverseSurface</item>
+		<item name="colorOnSurfaceInverse">@color/cyber_white_inverseOnSurface</item>
+		<item name="colorPrimaryInverse">@color/cyber_white_inversePrimary</item>
+		<item name="colorPrimaryFixed">@color/cyber_white_primaryFixed</item>
+		<item name="colorOnPrimaryFixed">@color/cyber_white_onPrimaryFixed</item>
+		<item name="colorPrimaryFixedDim">@color/cyber_white_primaryFixedDim</item>
+		<item name="colorOnPrimaryFixedVariant">@color/cyber_white_onPrimaryFixedVariant</item>
+		<item name="colorSecondaryFixed">@color/cyber_white_secondaryFixed</item>
+		<item name="colorOnSecondaryFixed">@color/cyber_white_onSecondaryFixed</item>
+		<item name="colorSecondaryFixedDim">@color/cyber_white_secondaryFixedDim</item>
+		<item name="colorOnSecondaryFixedVariant">@color/cyber_white_onSecondaryFixedVariant</item>
+		<item name="colorTertiaryFixed">@color/cyber_white_tertiaryFixed</item>
+		<item name="colorOnTertiaryFixed">@color/cyber_white_onTertiaryFixed</item>
+		<item name="colorTertiaryFixedDim">@color/cyber_white_tertiaryFixedDim</item>
+		<item name="colorOnTertiaryFixedVariant">@color/cyber_white_onTertiaryFixedVariant</item>
+		<item name="colorSurfaceDim">@color/cyber_white_surfaceDim</item>
+		<item name="colorSurfaceBright">@color/cyber_white_surfaceBright</item>
+		<item name="colorSurfaceContainerLowest">@color/cyber_white_surfaceContainerLowest</item>
+		<item name="colorSurfaceContainerLow">@color/cyber_white_surfaceContainerLow</item>
+		<item name="colorSurfaceContainer">@color/cyber_white_surfaceContainer</item>
+		<item name="colorSurfaceContainerHigh">@color/cyber_white_surfaceContainerHigh</item>
+		<item name="colorSurfaceContainerHighest">@color/cyber_white_surfaceContainerHighest</item>
+		<item name="android:windowBackground">@color/cyber_white_background</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+	</style>
+
+	<!-- Amber Terminal -->
+	<style name="ThemeOverlay.Kotatsu.Cyber.Amber" parent="ThemeOverlay.Kotatsu.Cyber">
+		<item name="colorPrimary">@color/cyber_amber_primary</item>
+		<item name="colorOnPrimary">@color/cyber_amber_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/cyber_amber_primaryContainer</item>
+		<item name="colorOnPrimaryContainer">@color/cyber_amber_onPrimaryContainer</item>
+		<item name="colorSecondary">@color/cyber_amber_secondary</item>
+		<item name="colorOnSecondary">@color/cyber_amber_onSecondary</item>
+		<item name="colorSecondaryContainer">@color/cyber_amber_secondaryContainer</item>
+		<item name="colorOnSecondaryContainer">@color/cyber_amber_onSecondaryContainer</item>
+		<item name="colorTertiary">@color/cyber_amber_tertiary</item>
+		<item name="colorOnTertiary">@color/cyber_amber_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/cyber_amber_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/cyber_amber_onTertiaryContainer</item>
+		<item name="colorError">@color/cyber_amber_error</item>
+		<item name="colorOnError">@color/cyber_amber_onError</item>
+		<item name="colorErrorContainer">@color/cyber_amber_errorContainer</item>
+		<item name="colorOnErrorContainer">@color/cyber_amber_onErrorContainer</item>
+		<item name="android:colorBackground">@color/cyber_amber_background</item>
+		<item name="colorOnBackground">@color/cyber_amber_onBackground</item>
+		<item name="colorSurface">@color/cyber_amber_surface</item>
+		<item name="colorOnSurface">@color/cyber_amber_onSurface</item>
+		<item name="colorSurfaceVariant">@color/cyber_amber_surfaceVariant</item>
+		<item name="colorOnSurfaceVariant">@color/cyber_amber_onSurfaceVariant</item>
+		<item name="colorOutline">@color/cyber_amber_outline</item>
+		<item name="colorOutlineVariant">@color/cyber_amber_outlineVariant</item>
+		<item name="colorSurfaceInverse">@color/cyber_amber_inverseSurface</item>
+		<item name="colorOnSurfaceInverse">@color/cyber_amber_inverseOnSurface</item>
+		<item name="colorPrimaryInverse">@color/cyber_amber_inversePrimary</item>
+		<item name="colorPrimaryFixed">@color/cyber_amber_primaryFixed</item>
+		<item name="colorOnPrimaryFixed">@color/cyber_amber_onPrimaryFixed</item>
+		<item name="colorPrimaryFixedDim">@color/cyber_amber_primaryFixedDim</item>
+		<item name="colorOnPrimaryFixedVariant">@color/cyber_amber_onPrimaryFixedVariant</item>
+		<item name="colorSecondaryFixed">@color/cyber_amber_secondaryFixed</item>
+		<item name="colorOnSecondaryFixed">@color/cyber_amber_onSecondaryFixed</item>
+		<item name="colorSecondaryFixedDim">@color/cyber_amber_secondaryFixedDim</item>
+		<item name="colorOnSecondaryFixedVariant">@color/cyber_amber_onSecondaryFixedVariant</item>
+		<item name="colorTertiaryFixed">@color/cyber_amber_tertiaryFixed</item>
+		<item name="colorOnTertiaryFixed">@color/cyber_amber_onTertiaryFixed</item>
+		<item name="colorTertiaryFixedDim">@color/cyber_amber_tertiaryFixedDim</item>
+		<item name="colorOnTertiaryFixedVariant">@color/cyber_amber_onTertiaryFixedVariant</item>
+		<item name="colorSurfaceDim">@color/cyber_amber_surfaceDim</item>
+		<item name="colorSurfaceBright">@color/cyber_amber_surfaceBright</item>
+		<item name="colorSurfaceContainerLowest">@color/cyber_amber_surfaceContainerLowest</item>
+		<item name="colorSurfaceContainerLow">@color/cyber_amber_surfaceContainerLow</item>
+		<item name="colorSurfaceContainer">@color/cyber_amber_surfaceContainer</item>
+		<item name="colorSurfaceContainerHigh">@color/cyber_amber_surfaceContainerHigh</item>
+		<item name="colorSurfaceContainerHighest">@color/cyber_amber_surfaceContainerHighest</item>
+		<item name="android:windowBackground">@color/cyber_amber_background</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+	</style>
+
+	<!-- Crimson Alert -->
+	<style name="ThemeOverlay.Kotatsu.Cyber.Red" parent="ThemeOverlay.Kotatsu.Cyber">
+		<item name="colorPrimary">@color/cyber_red_primary</item>
+		<item name="colorOnPrimary">@color/cyber_red_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/cyber_red_primaryContainer</item>
+		<item name="colorOnPrimaryContainer">@color/cyber_red_onPrimaryContainer</item>
+		<item name="colorSecondary">@color/cyber_red_secondary</item>
+		<item name="colorOnSecondary">@color/cyber_red_onSecondary</item>
+		<item name="colorSecondaryContainer">@color/cyber_red_secondaryContainer</item>
+		<item name="colorOnSecondaryContainer">@color/cyber_red_onSecondaryContainer</item>
+		<item name="colorTertiary">@color/cyber_red_tertiary</item>
+		<item name="colorOnTertiary">@color/cyber_red_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/cyber_red_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/cyber_red_onTertiaryContainer</item>
+		<item name="colorError">@color/cyber_red_error</item>
+		<item name="colorOnError">@color/cyber_red_onError</item>
+		<item name="colorErrorContainer">@color/cyber_red_errorContainer</item>
+		<item name="colorOnErrorContainer">@color/cyber_red_onErrorContainer</item>
+		<item name="android:colorBackground">@color/cyber_red_background</item>
+		<item name="colorOnBackground">@color/cyber_red_onBackground</item>
+		<item name="colorSurface">@color/cyber_red_surface</item>
+		<item name="colorOnSurface">@color/cyber_red_onSurface</item>
+		<item name="colorSurfaceVariant">@color/cyber_red_surfaceVariant</item>
+		<item name="colorOnSurfaceVariant">@color/cyber_red_onSurfaceVariant</item>
+		<item name="colorOutline">@color/cyber_red_outline</item>
+		<item name="colorOutlineVariant">@color/cyber_red_outlineVariant</item>
+		<item name="colorSurfaceInverse">@color/cyber_red_inverseSurface</item>
+		<item name="colorOnSurfaceInverse">@color/cyber_red_inverseOnSurface</item>
+		<item name="colorPrimaryInverse">@color/cyber_red_inversePrimary</item>
+		<item name="colorPrimaryFixed">@color/cyber_red_primaryFixed</item>
+		<item name="colorOnPrimaryFixed">@color/cyber_red_onPrimaryFixed</item>
+		<item name="colorPrimaryFixedDim">@color/cyber_red_primaryFixedDim</item>
+		<item name="colorOnPrimaryFixedVariant">@color/cyber_red_onPrimaryFixedVariant</item>
+		<item name="colorSecondaryFixed">@color/cyber_red_secondaryFixed</item>
+		<item name="colorOnSecondaryFixed">@color/cyber_red_onSecondaryFixed</item>
+		<item name="colorSecondaryFixedDim">@color/cyber_red_secondaryFixedDim</item>
+		<item name="colorOnSecondaryFixedVariant">@color/cyber_red_onSecondaryFixedVariant</item>
+		<item name="colorTertiaryFixed">@color/cyber_red_tertiaryFixed</item>
+		<item name="colorOnTertiaryFixed">@color/cyber_red_onTertiaryFixed</item>
+		<item name="colorTertiaryFixedDim">@color/cyber_red_tertiaryFixedDim</item>
+		<item name="colorOnTertiaryFixedVariant">@color/cyber_red_onTertiaryFixedVariant</item>
+		<item name="colorSurfaceDim">@color/cyber_red_surfaceDim</item>
+		<item name="colorSurfaceBright">@color/cyber_red_surfaceBright</item>
+		<item name="colorSurfaceContainerLowest">@color/cyber_red_surfaceContainerLowest</item>
+		<item name="colorSurfaceContainerLow">@color/cyber_red_surfaceContainerLow</item>
+		<item name="colorSurfaceContainer">@color/cyber_red_surfaceContainer</item>
+		<item name="colorSurfaceContainerHigh">@color/cyber_red_surfaceContainerHigh</item>
+		<item name="colorSurfaceContainerHighest">@color/cyber_red_surfaceContainerHighest</item>
+		<item name="android:windowBackground">@color/cyber_red_background</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+	</style>
+
+	<!-- Violet Net -->
+	<style name="ThemeOverlay.Kotatsu.Cyber.Purple" parent="ThemeOverlay.Kotatsu.Cyber">
+		<item name="colorPrimary">@color/cyber_purple_primary</item>
+		<item name="colorOnPrimary">@color/cyber_purple_onPrimary</item>
+		<item name="colorPrimaryContainer">@color/cyber_purple_primaryContainer</item>
+		<item name="colorOnPrimaryContainer">@color/cyber_purple_onPrimaryContainer</item>
+		<item name="colorSecondary">@color/cyber_purple_secondary</item>
+		<item name="colorOnSecondary">@color/cyber_purple_onSecondary</item>
+		<item name="colorSecondaryContainer">@color/cyber_purple_secondaryContainer</item>
+		<item name="colorOnSecondaryContainer">@color/cyber_purple_onSecondaryContainer</item>
+		<item name="colorTertiary">@color/cyber_purple_tertiary</item>
+		<item name="colorOnTertiary">@color/cyber_purple_onTertiary</item>
+		<item name="colorTertiaryContainer">@color/cyber_purple_tertiaryContainer</item>
+		<item name="colorOnTertiaryContainer">@color/cyber_purple_onTertiaryContainer</item>
+		<item name="colorError">@color/cyber_purple_error</item>
+		<item name="colorOnError">@color/cyber_purple_onError</item>
+		<item name="colorErrorContainer">@color/cyber_purple_errorContainer</item>
+		<item name="colorOnErrorContainer">@color/cyber_purple_onErrorContainer</item>
+		<item name="android:colorBackground">@color/cyber_purple_background</item>
+		<item name="colorOnBackground">@color/cyber_purple_onBackground</item>
+		<item name="colorSurface">@color/cyber_purple_surface</item>
+		<item name="colorOnSurface">@color/cyber_purple_onSurface</item>
+		<item name="colorSurfaceVariant">@color/cyber_purple_surfaceVariant</item>
+		<item name="colorOnSurfaceVariant">@color/cyber_purple_onSurfaceVariant</item>
+		<item name="colorOutline">@color/cyber_purple_outline</item>
+		<item name="colorOutlineVariant">@color/cyber_purple_outlineVariant</item>
+		<item name="colorSurfaceInverse">@color/cyber_purple_inverseSurface</item>
+		<item name="colorOnSurfaceInverse">@color/cyber_purple_inverseOnSurface</item>
+		<item name="colorPrimaryInverse">@color/cyber_purple_inversePrimary</item>
+		<item name="colorPrimaryFixed">@color/cyber_purple_primaryFixed</item>
+		<item name="colorOnPrimaryFixed">@color/cyber_purple_onPrimaryFixed</item>
+		<item name="colorPrimaryFixedDim">@color/cyber_purple_primaryFixedDim</item>
+		<item name="colorOnPrimaryFixedVariant">@color/cyber_purple_onPrimaryFixedVariant</item>
+		<item name="colorSecondaryFixed">@color/cyber_purple_secondaryFixed</item>
+		<item name="colorOnSecondaryFixed">@color/cyber_purple_onSecondaryFixed</item>
+		<item name="colorSecondaryFixedDim">@color/cyber_purple_secondaryFixedDim</item>
+		<item name="colorOnSecondaryFixedVariant">@color/cyber_purple_onSecondaryFixedVariant</item>
+		<item name="colorTertiaryFixed">@color/cyber_purple_tertiaryFixed</item>
+		<item name="colorOnTertiaryFixed">@color/cyber_purple_onTertiaryFixed</item>
+		<item name="colorTertiaryFixedDim">@color/cyber_purple_tertiaryFixedDim</item>
+		<item name="colorOnTertiaryFixedVariant">@color/cyber_purple_onTertiaryFixedVariant</item>
+		<item name="colorSurfaceDim">@color/cyber_purple_surfaceDim</item>
+		<item name="colorSurfaceBright">@color/cyber_purple_surfaceBright</item>
+		<item name="colorSurfaceContainerLowest">@color/cyber_purple_surfaceContainerLowest</item>
+		<item name="colorSurfaceContainerLow">@color/cyber_purple_surfaceContainerLow</item>
+		<item name="colorSurfaceContainer">@color/cyber_purple_surfaceContainer</item>
+		<item name="colorSurfaceContainerHigh">@color/cyber_purple_surfaceContainerHigh</item>
+		<item name="colorSurfaceContainerHighest">@color/cyber_purple_surfaceContainerHighest</item>
+		<item name="android:windowBackground">@color/cyber_purple_background</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+	</style>
+
+</resources>

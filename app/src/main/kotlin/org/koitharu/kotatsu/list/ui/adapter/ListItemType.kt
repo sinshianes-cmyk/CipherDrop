@@ -1,0 +1,46 @@
+package org.koitharu.kotatsu.list.ui.adapter
+
+enum class ListItemType {
+
+	QUICK_FILTER,
+	FILTER_SORT,
+	FILTER_TAG,
+	FILTER_TAG_MULTI,
+	FILTER_STATE,
+	FILTER_LANGUAGE,
+	MIHON_SORT_OPTION,
+	MIHON_SORT_SECTION,
+	HEADER,
+	// The History delegates MUST stay above the generic list delegates: AdapterDelegates asks the
+	// delegates in ascending view-type (= ordinal) order and the first one that accepts the item wins.
+	// With the generic ones first they accepted every history item and the History cards never showed.
+	MANGA_LIST_HISTORY,
+	MANGA_LIST_DETAILED_HISTORY,
+	MANGA_LIST,
+	MANGA_LIST_DETAILED,
+	MANGA_GRID,
+	MANGA_CAROUSEL,
+	MANGA_NESTED_GROUP,
+	FOOTER_LOADING,
+	FOOTER_ERROR,
+	FOOTER_BUTTON,
+	STATE_LOADING,
+	STATE_ERROR,
+	STATE_EMPTY,
+	EXPLORE_BUTTONS,
+	EXPLORE_SOURCE_GRID,
+	EXPLORE_SOURCE_LIST,
+	EXPLORE_SUGGESTION,
+	TIP,
+	INFO,
+	HINT_EMPTY,
+	PAGE_THUMB,
+	FEED,
+	DOWNLOAD,
+	CATEGORY_LARGE,
+	MANGA_SCROBBLING,
+	NAV_ITEM,
+	CHAPTER_LIST,
+	CHAPTER_GRID,
+	MISSING_CHAPTERS,
+}
